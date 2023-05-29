@@ -57,6 +57,14 @@ public class Carrinho implements Serializable {
         return produtos;
     }
 
+    public BigDecimal getTotal() {
+        BigDecimal sum = new BigDecimal(0.0);
+        for(ProdutoCarrinho x : produtos) {
+            sum = sum.add(x.getSubTotal());
+        }
+        return sum;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

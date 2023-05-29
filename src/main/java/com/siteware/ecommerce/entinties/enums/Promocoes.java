@@ -1,9 +1,11 @@
 package com.siteware.ecommerce.entinties.enums;
 
 public enum Promocoes {
-    TRES_POR_DEZ(0),
+
+
+    NENHUMA_PROMOCAO(0),
     LEVE_2_PAGUE_1(1),
-    NENHUMA_PROMOCAO(2);
+    TRES_POR_DEZ(2);
 
     private int code;
 
@@ -16,9 +18,9 @@ public enum Promocoes {
     }
 
     public static Promocoes valeuOf(int code) {
-        for(Promocoes valeu : Promocoes.values()){
-            if (valeu.getCode() == code){
-                return valeu;
+        for (Promocoes value : Promocoes.values()) {
+            if (value.getCode() == code) {
+                return value;
             }
         }
         throw new IllegalArgumentException("Invalid Promocoes code");

@@ -1,5 +1,6 @@
 package com.siteware.ecommerce.entinties;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.siteware.ecommerce.entinties.enums.Promocoes;
 import jakarta.persistence.*;
 
@@ -20,13 +21,18 @@ public class Produto implements Serializable {
     private Long id;
     private String nome;
     private BigDecimal preco;
+    private Promocoes promocao;
+    @OneToMany(mappedBy = "id.produto")
+    private Set<ProdutoCarrinho> produtoCarrinho = new HashSet<>();
+
     public Produto() {
     }
 
-    public Produto(Long id, String nome, BigDecimal preco) {
+    public Produto(Long id, String nome, BigDecimal preco, Promocoes promocao) {
         this.id = id;
         this.nome = nome;
         this.preco = preco;
+        this.promocao = promocao;
     }
 
     public Long getId() {
@@ -51,6 +57,23 @@ public class Produto implements Serializable {
 
     public void setPreco(BigDecimal preco) {
         this.preco = preco;
+    }
+
+    public Promocoes getPromocao() {
+        return promocao;
+    }
+
+    public void setPromocao(Promocoes promocao) {
+        this.promocao = promocao;
+    }
+
+    @JsonIgnore
+    public Set<Carrinho> getCarrinhos() {
+        Set<Carrinho> set = new HashSet<>();
+        for (ProdutoCarrinho x : produtoCarrinho) {
+            set.add(x.getCarrinho());
+        }
+        return set;
     }
 
     @Override

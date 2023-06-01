@@ -5,6 +5,7 @@ import com.siteware.ecommerce.entinties.ProdutoCarrinho;
 import com.siteware.ecommerce.entinties.User;
 import com.siteware.ecommerce.repositories.ProdutoRepository;
 import com.siteware.ecommerce.services.exceptions.DatabaseException;
+import com.siteware.ecommerce.services.exceptions.ProdutoNomeExistenteException;
 import com.siteware.ecommerce.services.exceptions.ResourceNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,21 +27,31 @@ public class ProdutoService {
         return repository.findAll();
     }
 
-    public Produto findById(Long id){
+    public List<Produto> findAllProdutosAtivos() {
+        return repository.findAllProdutosAtivos();
+    }
+
+    public Produto findById(Long id) {
         Optional<Produto> obj = repository.findById(id);
         return obj.get();
     }
 
     public Produto insert(Produto obj) {
-        return repository.save(obj);
+        Produto existsByNome = repository.existsByNome(obj.getNome());
+        if (existsByNome == null || existsByNome.getAtivo() == false) {
+            return repository.save(obj);
+        }
+        throw new ProdutoNomeExistenteException("Não foi adicionado. O nome do produto já existe.");
     }
 
     public void delete(Long id) {
-        try{
-            repository.deleteById(id);
-        } catch (EmptyResultDataAccessException e){
+        try {
+            Produto produto = repository.findProdutoByIdProduto(id);
+            produto.setAtivo(false);
+            repository.save(produto);
+        } catch (NullPointerException e) {
             throw new ResourceNotFoundException(id);
-        } catch (DataIntegrityViolationException e){
+        } catch (DataIntegrityViolationException e) {
             throw new DatabaseException(e.getMessage());
         }
     }

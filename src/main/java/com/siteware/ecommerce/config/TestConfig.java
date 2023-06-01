@@ -43,9 +43,9 @@ public class TestConfig implements CommandLineRunner {
         Carrinho c1 = new Carrinho(null, new BigDecimal(10), u1);
         Carrinho c2 = new Carrinho(null, new BigDecimal(5), u2);
 
-        Produto p1 = new Produto(null, "Arroz", new BigDecimal(10.5), TRES_POR_DEZ);
-        Produto p2 = new Produto(null, "Feijao", new BigDecimal(5.5), NENHUMA_PROMOCAO);
-        Produto p3 = new Produto(null, "Carne", new BigDecimal(55.5), LEVE_2_PAGUE_1);
+        Produto p1 = new Produto(null, "Arroz", new BigDecimal(10.5), true,TRES_POR_DEZ);
+        Produto p2 = new Produto(null, "Feijao", new BigDecimal(5.5), true,NENHUMA_PROMOCAO);
+        Produto p3 = new Produto(null, "Carne", new BigDecimal(55.5), true,LEVE_2_PAGUE_1);
 
         userRepository.saveAll(Arrays.asList(u1, u2));
         carrinhoRepository.saveAll(Arrays.asList(c1, c2));

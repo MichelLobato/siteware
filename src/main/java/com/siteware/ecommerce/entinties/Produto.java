@@ -25,13 +25,16 @@ public class Produto implements Serializable {
     @OneToMany(mappedBy = "id.produto")
     private Set<ProdutoCarrinho> produtoCarrinho = new HashSet<>();
 
+    private Boolean isAtivo;
+
     public Produto() {
     }
 
-    public Produto(Long id, String nome, BigDecimal preco, Promocoes promocao) {
+    public Produto(Long id, String nome, BigDecimal preco, Boolean isAtivo, Promocoes promocao) {
         this.id = id;
-        this.nome = nome;
+        this.nome = nome.toUpperCase();
         this.preco = preco;
+        this.isAtivo = isAtivo;
         this.promocao = promocao;
     }
 
@@ -48,7 +51,7 @@ public class Produto implements Serializable {
     }
 
     public void setNome(String nome) {
-        this.nome = nome;
+        this.nome = nome.toUpperCase();
     }
 
     public BigDecimal getPreco() {
@@ -65,6 +68,14 @@ public class Produto implements Serializable {
 
     public void setPromocao(Promocoes promocao) {
         this.promocao = promocao;
+    }
+
+    public Boolean getAtivo() {
+        return isAtivo;
+    }
+
+    public void setAtivo(Boolean ativo) {
+        isAtivo = ativo;
     }
 
     @JsonIgnore

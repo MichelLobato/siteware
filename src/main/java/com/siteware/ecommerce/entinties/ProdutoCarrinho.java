@@ -118,4 +118,5 @@ public class ProdutoCarrinho implements Serializable {
     public int hashCode() {
         return Objects.hash(id);
     }
+
 }

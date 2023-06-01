@@ -2,6 +2,7 @@ package com.siteware.ecommerce.services;
 
 import com.siteware.ecommerce.entinties.Carrinho;
 import com.siteware.ecommerce.entinties.Carrinho;
+import com.siteware.ecommerce.entinties.ProdutoCarrinho;
 import com.siteware.ecommerce.entinties.User;
 import com.siteware.ecommerce.repositories.CarrinhoRepository;
 import com.siteware.ecommerce.repositories.UserRepository;
@@ -11,8 +12,10 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,4 +48,10 @@ public class CarrinhoService {
         }
     }
 
+    public Carrinho atualizaValorDoCarrinho(ProdutoCarrinho produtoCarrinho, Long id){
+        produtoCarrinho.getSubTotal();
+        Carrinho obj = repository.findById(id).get();
+        obj.setValorFinal(obj.getTotal());
+        return repository.save(obj);
+    }
 }

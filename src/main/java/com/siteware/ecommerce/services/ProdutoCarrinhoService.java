@@ -1,6 +1,8 @@
 package com.siteware.ecommerce.services;
 
+import com.siteware.ecommerce.entinties.Carrinho;
 import com.siteware.ecommerce.entinties.ProdutoCarrinho;
+import com.siteware.ecommerce.repositories.CarrinhoRepository;
 import com.siteware.ecommerce.repositories.ProdutoCarrinhoRepository;
 import com.siteware.ecommerce.services.exceptions.DatabaseException;
 import com.siteware.ecommerce.services.exceptions.ResourceNotFoundException;
@@ -17,6 +19,8 @@ public class ProdutoCarrinhoService {
 
     @Autowired
     private ProdutoCarrinhoRepository repository;
+    @Autowired
+    private CarrinhoRepository carrinhoRepository;
 
     public List<ProdutoCarrinho> findAll() {
         return repository.findAll();

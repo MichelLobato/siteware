@@ -2,12 +2,15 @@ package com.siteware.ecommerce.resources;
 
 import com.siteware.ecommerce.entinties.Carrinho;
 import com.siteware.ecommerce.entinties.Carrinho;
+import com.siteware.ecommerce.entinties.ProdutoCarrinho;
 import com.siteware.ecommerce.services.CarrinhoService;
+import com.siteware.ecommerce.services.ProdutoCarrinhoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.math.BigDecimal;
 import java.net.URI;
 import java.util.List;
 
@@ -17,6 +20,9 @@ public class CarrinhoResource {
 
     @Autowired
     private CarrinhoService service;
+
+    @Autowired
+    private ProdutoCarrinhoService produtoCarrinhoService;
 
     @GetMapping
     public ResponseEntity<List<Carrinho>> findAll() {
@@ -39,7 +45,7 @@ public class CarrinhoResource {
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id){
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }

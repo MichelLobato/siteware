@@ -53,6 +53,7 @@ public class ProdutoCarrinhoResource {
 
         ProdutoCarrinho produtoCarrinho = new ProdutoCarrinho(carrinho, produto, obj.getQuantidade(), produto.getPreco());
         produtoCarrinho = service.insert(produtoCarrinho);
+        carrinhoService.atualizaValorDoCarrinho(produtoCarrinho, carrinhoId);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{carrinhoId}/{produtoId}")

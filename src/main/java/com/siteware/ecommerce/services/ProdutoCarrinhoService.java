@@ -1,6 +1,7 @@
 package com.siteware.ecommerce.services;
 
 import com.siteware.ecommerce.entinties.Carrinho;
+import com.siteware.ecommerce.entinties.Produto;
 import com.siteware.ecommerce.entinties.ProdutoCarrinho;
 import com.siteware.ecommerce.repositories.CarrinhoRepository;
 import com.siteware.ecommerce.repositories.ProdutoCarrinhoRepository;
@@ -19,8 +20,6 @@ public class ProdutoCarrinhoService {
 
     @Autowired
     private ProdutoCarrinhoRepository repository;
-    @Autowired
-    private CarrinhoRepository carrinhoRepository;
 
     public List<ProdutoCarrinho> findAll() {
         return repository.findAll();
@@ -33,6 +32,17 @@ public class ProdutoCarrinhoService {
 
     public ProdutoCarrinho insert(ProdutoCarrinho obj) {
         return repository.save(obj);
+    }
+
+    public ProdutoCarrinho findProdutoCarrinhoByCarrinhoAndProduto(Produto produto, Carrinho carrinho, ProdutoCarrinho produtoCarrinho){
+        ProdutoCarrinho obj = repository.findProdutoCarrinhoByCarrinhoAndProduto(produto.getId(), carrinho.getId());
+
+        if(obj != null){
+            obj.setQuantidade(produtoCarrinho.getQuantidade());
+           return repository.save(obj);
+        }
+
+        return obj;
     }
 
     public void delete(Long id) {

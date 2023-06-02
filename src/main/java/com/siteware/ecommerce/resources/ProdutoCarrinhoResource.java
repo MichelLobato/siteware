@@ -51,6 +51,7 @@ public class ProdutoCarrinhoResource {
             return ResponseEntity.notFound().build();
         }
 
+        service.findProdutoCarrinhoByCarrinhoAndProduto(produto, carrinho, obj);
         ProdutoCarrinho produtoCarrinho = new ProdutoCarrinho(carrinho, produto, obj.getQuantidade(), produto.getPreco());
         produtoCarrinho = service.insert(produtoCarrinho);
         carrinhoService.atualizaValorDoCarrinho(produtoCarrinho, carrinhoId);
@@ -61,14 +62,6 @@ public class ProdutoCarrinhoResource {
                 .toUri();
 
         return ResponseEntity.created(location).body(produtoCarrinho);
-    }
-
-
-
-    @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id){
-        service.delete(id);
-        return ResponseEntity.noContent().build();
     }
 
 }

@@ -6,7 +6,7 @@ JDK 17
 Maven
 Instalação
 Clone o repositório:
-git clone (https://github.com/MichelLobato/siteware.git)
+git clone `https://github.com/MichelLobato/siteware.git`
 
 1. Entre no diretório do projeto:
 `cd ecommerce`

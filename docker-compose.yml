@@ -8,6 +8,9 @@ services:
       - 8080:8080
     depends_on:
       - db
+    networks:
+      - ecommerce-network
+
   db:
     image: postgres
     environment:
@@ -16,3 +19,12 @@ services:
       - ./data:/var/lib/postgresql/data
     ports:
       - 5432:5432
+    networks:
+      - ecommerce-network
+
+networks:
+  ecommerce-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
